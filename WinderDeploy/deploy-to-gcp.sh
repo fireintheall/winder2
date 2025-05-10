@@ -36,17 +36,13 @@ echo "필요한 Google Cloud API 활성화 중..."
 gcloud services enable container.googleapis.com containerregistry.googleapis.com cloudbuild.googleapis.com run.googleapis.com
 
 # 작업 디렉토리 준비
-echo "임시 작업 디렉토리 준비 중..."
-mkdir -p deploy_temp
-cp cloudbuild.yaml deploy_temp/
+echo "작업 디렉토리 준비 중..."
+# Dockerfile은 이미 루트에 있으므로 별도 작업 필요 없음
 
 # Cloud Build를 사용하여 이미지 빌드 및 배포
 echo "Cloud Build를 사용하여 이미지 빌드 및 배포 중..."
-gcloud builds submit deploy_temp --config=deploy_temp/cloudbuild.yaml \
-  --substitutions=_DISCORD_TOKEN="$DISCORD_TOKEN",_BOT_PREFIX="$BOT_PREFIX",_DEBUG="$DEBUG"
-
-# 임시 디렉토리 정리
-rm -rf deploy_temp
+gcloud builds submit --config=cloudbuild.yaml \
+  --substitutions=_DISCORD_TOKEN="$DISCORD_TOKEN",_BOT_PREFIX="$BOT_PREFIX",_DEBUG="$DEBUG" .
 
 echo "배포가 완료되었습니다!"
 echo "디스코드 봇 서비스는 이제 Cloud Run에서 액세스할 수 있습니다."

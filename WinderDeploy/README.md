@@ -75,7 +75,11 @@ Discord 봇 토큰은 매우 민감한 정보입니다. 다음 보안 지침을 
 unable to prepare context: unable to evaluate symlinks in Dockerfile path: lstat /workspace/Dockerfile: no such file or directory
 ```
 
-이 오류는 Cloud Build가 작업 디렉토리에서 Dockerfile을 찾지 못할 때 발생합니다. 이 프로젝트는 수정된 `cloudbuild.yaml`을 사용하여 GitHub 저장소에서 직접 소스 코드를 가져오고 정확한 Dockerfile 위치를 지정합니다.
+이 오류는 Cloud Build가 작업 디렉토리에서 Dockerfile을 찾지 못할 때 발생합니다. 이 프로젝트는 이런 문제를 해결하기 위해 특별한 Dockerfile을 사용합니다:
+
+1. 루트 디렉토리에 Dockerfile이 포함되어 있습니다.
+2. 이 Dockerfile은 빌드 시 GitHub에서 필요한 코드를 자동으로 가져옵니다.
+3. 따라서 소스 코드가 없더라도 빌드가 가능합니다.
 
 ## 파일 구조
 

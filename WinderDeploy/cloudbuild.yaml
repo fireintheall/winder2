@@ -1,11 +1,7 @@
 steps:
-  # 소스 코드 가져오기 및 준비
-  - name: 'gcr.io/cloud-builders/git'
-    args: ['clone', 'https://github.com/fireintheall/winder2.git', 'src']
-
-  # 도커 이미지 빌드 (Dockerfile 위치 지정)
+  # 도커 이미지 빌드 (루트 디렉토리의 Dockerfile 사용)
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/discord-bot:latest', '-f', 'src/KoreanDiscordAssistant/Dockerfile', 'src/KoreanDiscordAssistant']
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/discord-bot:latest', '.']
   
   # 이미지를 Container Registry에 푸시
   - name: 'gcr.io/cloud-builders/docker'
