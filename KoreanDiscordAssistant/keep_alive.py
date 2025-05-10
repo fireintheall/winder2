@@ -1,3 +1,4 @@
+import os
 from flask import Flask
 from threading import Thread
 
@@ -15,7 +16,9 @@ def ping():
 
 
 def run():
-    app.run(host='0.0.0.0', port=5000)  # 포트를 5000으로 설정
+    # 환경 변수에서 PORT 가져오기 (기본값 5000)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
 
 
 def keep_alive():
