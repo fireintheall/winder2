@@ -1,0 +1,20 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: discord-schedule-bot
+spec:
+  template:
+    spec:
+      containers:
+      - image: gcr.io/PROJECT_ID/discord-bot:latest
+        env:
+        - name: DISCORD_TOKEN
+          value: "여기에_실제_토큰_입력"
+        - name: BOT_PREFIX
+          value: "!"
+        - name: DEBUG
+          value: "False"
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 512Mi
